@@ -1,0 +1,12 @@
+{
+    "server": {
+        "baseUrl": "localhost",
+        "port": ":8069"
+    },
+    "links": {
+        "minLength": 5,
+        "maxLength": 20,
+        "minDuration": 30,
+        "maxDuration": 1800
+    }
+}
