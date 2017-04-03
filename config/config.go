@@ -21,8 +21,8 @@ type ServerConfiguration struct {
 }
 
 type LinksConfiguration struct {
-	MinLength   uint          `json:"minLength"`
-	MaxLength   uint          `json:"maxLength"`
+	MinLength   int           `json:"minLength"`
+	MaxLength   int           `json:"maxLength"`
 	MinDuration time.Duration `json:"minDuration"`
 	MaxDuration time.Duration `json:"maxDuration"`
 }
