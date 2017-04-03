@@ -3,6 +3,7 @@ package api
 import (
 	"net/http"
 
+	"github.com/davidlu1997/fast-shortener/config"
 	"github.com/davidlu1997/fast-shortener/shortener"
 	"github.com/valyala/fasthttp"
 )
@@ -11,9 +12,9 @@ type API struct {
 	shortener shortener.Shortener
 }
 
-func InitAPI() *API {
+func InitAPI(config *config.Configuration) *API {
 	return &API{
-		shortener: shortener.Shortener{},
+		shortener: shortener.InitCacheShortener(config),
 	}
 }
 

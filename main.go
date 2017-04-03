@@ -16,7 +16,9 @@ func main() {
 		os.Exit(2)
 	}
 
-	api := api.InitAPI()
+	api := api.InitAPI(config)
+
+	fmt.Printf("Serving %s%s\n", config.Server.BaseUrl, config.Server.Port)
 	err = fasthttp.ListenAndServe(config.Server.Port, api.RequestHandler)
 	if err != nil {
 		fmt.Println(err)

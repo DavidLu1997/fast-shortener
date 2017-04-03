@@ -4,10 +4,9 @@ import "github.com/davidlu1997/fast-shortener/config"
 import "time"
 
 type Link struct {
-	URL       string    `json:"url"`
-	Key       string    `json:"key"`
-	CreatedAt time.Time `json:"-"`
-	ExpiresAt time.Time `json:"-"`
+	URL      string        `json:"url"`
+	Key      string        `json:"key"`
+	Duration time.Duration `json:"duration"`
 }
 
 func (l *Link) IsValid(config *config.Configuration) bool {
@@ -15,8 +14,7 @@ func (l *Link) IsValid(config *config.Configuration) bool {
 		return true
 	}
 
-	duration := l.ExpiresAt.Sub(l.CreatedAt)
-	if duration > config.Links.MaxDuration || duration < config.Links.MinDuration {
+	if l.Duration > config.Links.MaxDuration || l.Duration < config.Links.MinDuration {
 		return false
 	}
 

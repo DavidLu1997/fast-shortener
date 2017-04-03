@@ -11,8 +11,9 @@ const durationStep = time.Second
 const filePath = "config/config.json"
 
 type Configuration struct {
-	Server ServerConfiguration `json:"server"`
-	Links  LinksConfiguration  `json:"links"`
+	Server *ServerConfiguration `json:"server"`
+	Links  *LinksConfiguration  `json:"links"`
+	Cache  *CacheConfiguration  `json:"cache"`
 }
 
 type ServerConfiguration struct {
@@ -25,6 +26,11 @@ type LinksConfiguration struct {
 	MaxLength   int           `json:"maxLength"`
 	MinDuration time.Duration `json:"minDuration"`
 	MaxDuration time.Duration `json:"maxDuration"`
+}
+
+type CacheConfiguration struct {
+	DefaultDuration time.Duration `json:"defaultDuration"`
+	DefaultPurge    time.Duration `json:"defaultPurge"`
 }
 
 func GetConfig() (*Configuration, error) {
@@ -49,4 +55,6 @@ func GetConfig() (*Configuration, error) {
 func (c *Configuration) processConfig() {
 	c.Links.MinDuration *= durationStep
 	c.Links.MaxDuration *= durationStep
+	c.Cache.DefaultDuration *= durationStep
+	c.Cache.DefaultPurge *= durationStep
 }
