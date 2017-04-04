@@ -15,7 +15,7 @@ func TestIsValid(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	link1 := Link{
+	link1 := &Link{
 		URL:      "https://google.com",
 		Key:      "a",
 		Duration: 5 * time.Minute,
@@ -25,7 +25,7 @@ func TestIsValid(t *testing.T) {
 		t.Fatal("should be invalid, key too short")
 	}
 
-	link2 := Link{
+	link2 := &Link{
 		URL:      "https://google.com",
 		Key:      "derp-herp",
 		Duration: 1 * time.Second,
@@ -35,7 +35,7 @@ func TestIsValid(t *testing.T) {
 		t.Fatal("should be invalid, duration too short")
 	}
 
-	link3 := Link{
+	link3 := &Link{
 		URL:      "https://google.com",
 		Key:      "derp-herp",
 		Duration: 5 * time.Minute,
@@ -45,7 +45,7 @@ func TestIsValid(t *testing.T) {
 		t.Fatal("should be valid")
 	}
 
-	link4 := Link{
+	link4 := &Link{
 		URL:      "https://google.com",
 		Key:      "abcdefghijklmnopqrstuvwxyz",
 		Duration: 5 * time.Minute,
@@ -55,7 +55,7 @@ func TestIsValid(t *testing.T) {
 		t.Fatal("should be invalid, key too long")
 	}
 
-	link5 := Link{
+	link5 := &Link{
 		URL:      "https://google.com",
 		Key:      "derp-herp",
 		Duration: 100 * time.Hour,
