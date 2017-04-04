@@ -30,6 +30,7 @@ type LinksConfiguration struct {
 type CacheConfiguration struct {
 	DefaultDuration time.Duration `json:"defaultDuration"`
 	DefaultPurge    time.Duration `json:"defaultPurge"`
+	MaxSize         int           `json:"maxSize"`
 }
 
 func GetConfig(filePath string) (*Configuration, error) {

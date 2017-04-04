@@ -11,6 +11,7 @@
     },
     "cache": {
         "defaultDuration": 600,
-        "defaultPurge": 30
+        "defaultPurge": 30,
+        "maxSize": 10000
     }
 }
