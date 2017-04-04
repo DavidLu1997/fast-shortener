@@ -9,8 +9,10 @@ import (
 	"github.com/valyala/fasthttp"
 )
 
+const configPath = "config/config.json"
+
 func main() {
-	config, err := config.GetConfig()
+	config, err := config.GetConfig(configPath)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(2)

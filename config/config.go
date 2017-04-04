@@ -8,7 +8,6 @@ import (
 )
 
 const durationStep = time.Second
-const filePath = "config/config.json"
 
 type Configuration struct {
 	Server *ServerConfiguration `json:"server"`
@@ -33,7 +32,7 @@ type CacheConfiguration struct {
 	DefaultPurge    time.Duration `json:"defaultPurge"`
 }
 
-func GetConfig() (*Configuration, error) {
+func GetConfig(filePath string) (*Configuration, error) {
 	path, _ := filepath.Abs(filePath)
 	file, err := os.Open(path)
 	if err != nil {
