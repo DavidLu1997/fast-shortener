@@ -1,6 +1,8 @@
 package shortener
 
 import (
+	"fmt"
+
 	"github.com/davidlu1997/fast-shortener/config"
 	"github.com/davidlu1997/fast-shortener/model"
 	cache "github.com/patrickmn/go-cache"
@@ -32,9 +34,13 @@ func (c *CacheShortener) Get(key string) *model.Link {
 }
 
 func (c *CacheShortener) Put(link *model.Link) error {
-	if link == nil || !link.IsValid(c.config) {
-		return nil
+	if !c.canPut(link) {
+		return fmt.Errorf("cannot put link")
 	}
 
 	return c.cache.Add(link.Key, link, link.Duration)
+}
+
+func (c *CacheShortener) canPut(link *model.Link) bool {
+	return link != nil && link.IsValid(c.config) && c.cache.ItemCount() < c.config.Cache.MaxSize
 }

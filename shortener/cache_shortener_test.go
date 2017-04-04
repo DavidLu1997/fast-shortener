@@ -72,3 +72,37 @@ func TestCacheShortenerExpiration(t *testing.T) {
 		t.Fatal("should not have found link")
 	}
 }
+
+func TestCacheShortenerMaxSize(t *testing.T) {
+	config, err := config.GetConfig(configPath)
+	if config == nil {
+		t.Fatal(err)
+	}
+
+	config.Cache.MaxSize = 1
+
+	cache := InitCacheShortener(config)
+	if cache == nil {
+		t.Fatal("failed to init cache shortener")
+	}
+
+	link1 := &model.Link{
+		URL:      "https://google.com",
+		Key:      "derp-herp",
+		Duration: 5 * time.Minute,
+	}
+
+	if err := cache.Put(link1); err != nil {
+		t.Fatal(err)
+	}
+
+	link2 := &model.Link{
+		URL:      "https://google.com",
+		Key:      "ferp-gerp",
+		Duration: 5 * time.Minute,
+	}
+
+	if err := cache.Put(link2); err == nil {
+		t.Fatal("should have errored")
+	}
+}
