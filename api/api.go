@@ -10,11 +10,13 @@ import (
 
 type API struct {
 	shortener shortener.Shortener
+	config    *config.Configuration
 }
 
 func InitAPI(config *config.Configuration) *API {
 	return &API{
 		shortener: shortener.InitCacheShortener(config),
+		config:    config,
 	}
 }
 
@@ -23,7 +25,6 @@ func (a *API) putLinkHandler(ctx *fasthttp.RequestCtx) {
 }
 
 func (a *API) getLinkHandler(ctx *fasthttp.RequestCtx) {
-
 }
 
 func (a *API) okHandler(ctx *fasthttp.RequestCtx) {
