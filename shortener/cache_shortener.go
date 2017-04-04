@@ -36,5 +36,5 @@ func (c *CacheShortener) Put(link *model.Link) error {
 		return nil
 	}
 
-	return c.cache.Add(link.Key, link.URL, link.Duration)
+	return c.cache.Add(link.Key, link, link.Duration)
 }
