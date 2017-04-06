@@ -9,6 +9,20 @@ import (
 
 const configPath = "../config/config.json"
 
+func TestPreSave(t *testing.T) {
+	link := &Link{
+		URL:     "https://google.com",
+		Key:     "a",
+		Seconds: 30,
+	}
+
+	link.PreSave()
+
+	if link.Duration != 30*time.Second {
+		t.Fatal("failed to get correct count")
+	}
+}
+
 func TestIsValid(t *testing.T) {
 	config, err := config.GetConfig(configPath)
 	if config == nil {
