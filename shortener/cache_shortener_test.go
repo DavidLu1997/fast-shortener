@@ -22,9 +22,9 @@ func TestCacheShortenerNormal(t *testing.T) {
 	}
 
 	link1 := &model.Link{
-		URL:      "https://google.com",
-		Key:      "derp-herp",
-		Duration: 5 * time.Minute,
+		URL:     "https://google.com",
+		Key:     "derp-herp",
+		Seconds: 300,
 	}
 
 	if err := cache.Put(link1); err != nil {
@@ -57,10 +57,11 @@ func TestCacheShortenerExpiration(t *testing.T) {
 	}
 
 	link1 := &model.Link{
-		URL:      "https://google.com",
-		Key:      "derp-herp",
-		Duration: 1 * time.Microsecond,
+		URL: "https://google.com",
+		Key: "derp-herp",
 	}
+	link1.Duration = new(time.Duration)
+	*link1.Duration = 1 * time.Microsecond
 
 	if err := cache.Put(link1); err != nil {
 		t.Fatal(err)
@@ -87,9 +88,9 @@ func TestCacheShortenerMaxSize(t *testing.T) {
 	}
 
 	link1 := &model.Link{
-		URL:      "https://google.com",
-		Key:      "derp-herp",
-		Duration: 5 * time.Minute,
+		URL:     "https://google.com",
+		Key:     "derp-herp",
+		Seconds: 300,
 	}
 
 	if err := cache.Put(link1); err != nil {
@@ -97,9 +98,9 @@ func TestCacheShortenerMaxSize(t *testing.T) {
 	}
 
 	link2 := &model.Link{
-		URL:      "https://google.com",
-		Key:      "ferp-gerp",
-		Duration: 5 * time.Minute,
+		URL:     "https://google.com",
+		Key:     "ferp-gerp",
+		Seconds: 300,
 	}
 
 	if err := cache.Put(link2); err == nil {

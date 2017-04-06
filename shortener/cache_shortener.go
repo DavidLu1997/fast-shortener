@@ -34,13 +34,18 @@ func (c *CacheShortener) Get(key string) *model.Link {
 }
 
 func (c *CacheShortener) Put(link *model.Link) error {
+	if link == nil {
+		return fmt.Errorf("null link")
+	}
+
+	link.PreSave()
+
 	if !c.canPut(link) {
 		return fmt.Errorf("cannot put link")
 	}
-
-	return c.cache.Add(link.Key, link, link.Duration)
+	return c.cache.Add(link.Key, link, *link.Duration)
 }
 
 func (c *CacheShortener) canPut(link *model.Link) bool {
-	return link != nil && link.IsValid(c.config) && c.cache.ItemCount() < c.config.Cache.MaxSize
+	return link.IsValid(c.config) && c.cache.ItemCount() < c.config.Cache.MaxSize
 }

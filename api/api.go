@@ -24,17 +24,17 @@ func InitAPI(config *config.Configuration) *API {
 }
 
 func (a *API) putLinkHandler(ctx *fasthttp.RequestCtx) {
-	var link *model.Link
+	var link model.Link
 	if err := json.Unmarshal(ctx.PostBody(), &link); err != nil {
 		ctx.Error(err.Error(), fasthttp.StatusBadRequest)
 	}
 
 	if !link.IsValid(a.config) {
-		ctx.Error("", fasthttp.StatusBadRequest)
+		ctx.Error("link not valid", fasthttp.StatusBadRequest)
 		return
 	}
 
-	if err := a.shortener.Put(link); err != nil {
+	if err := a.shortener.Put(&link); err != nil {
 		ctx.Error(err.Error(), fasthttp.StatusBadRequest)
 		return
 	}
