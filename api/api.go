@@ -29,11 +29,6 @@ func (a *API) putLinkHandler(ctx *fasthttp.RequestCtx) {
 		ctx.Error(err.Error(), fasthttp.StatusBadRequest)
 	}
 
-	if !link.IsValid(a.config) {
-		ctx.Error("link not valid", fasthttp.StatusBadRequest)
-		return
-	}
-
 	if err := a.shortener.Put(&link); err != nil {
 		ctx.Error(err.Error(), fasthttp.StatusBadRequest)
 		return
