@@ -45,10 +45,10 @@ func (a *API) putLinkHandler(ctx *fasthttp.RequestCtx) {
 func (a *API) getLinkHandler(ctx *fasthttp.RequestCtx) {
 	path := ctx.Path()
 	key := path[bytes.LastIndexByte(path, '/')+1:]
-
 	link := a.shortener.Get(string(key))
 	if link == nil {
 		ctx.Error("", fasthttp.StatusNotFound)
+		return
 	}
 
 	json, err := json.Marshal(link)
