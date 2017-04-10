@@ -31,7 +31,7 @@ func TestPutLink(t *testing.T) {
 	for i := 0; i < 100; i++ {
 		go func(a int) {
 			link := model.Link{
-				URL:     fmt.Sprintf("put-%d", a),
+				URL:     fmt.Sprintf("http://derp.com/put-%d", a),
 				Key:     fmt.Sprintf("key-%d", a),
 				Seconds: 30,
 			}
@@ -122,7 +122,7 @@ func TestGetLink(t *testing.T) {
 	for i := 0; i < numLinks; i++ {
 		go func(a int) {
 			link := model.Link{
-				URL:     fmt.Sprintf("get-%d", a),
+				URL:     fmt.Sprintf("http://derp.com/get-%d", a),
 				Key:     fmt.Sprintf("key-%d", a),
 				Seconds: 30,
 			}
@@ -160,17 +160,13 @@ func TestGetLink(t *testing.T) {
 
 		api.RequestHandler(&ctx)
 
-		if status := ctx.Response.StatusCode(); status != fasthttp.StatusOK {
-			t.Fatalf("Expected %d status got %d status", fasthttp.StatusOK, status)
+		if status := ctx.Response.StatusCode(); status != fasthttp.StatusFound {
+			t.Fatalf("Expected %d status got %d status", fasthttp.StatusFound, status)
 		}
 
-		var link model.Link
-		if err := json.Unmarshal(ctx.Response.Body(), &link); err != nil {
-			t.Fatal(err)
-		}
-
-		if url := fmt.Sprintf("get-%d", a); link.URL != url {
-			t.Fatalf("Expected %s url got %s url", url, link.URL)
+		url := fmt.Sprintf("http://derp.com/get-%d", a)
+		if location := ctx.Response.Header.Peek("Location"); string(location) != url {
+			t.Fatalf("Expected %s redirect, got %s", url, location)
 		}
 	}
 }

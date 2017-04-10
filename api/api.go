@@ -46,10 +46,7 @@ func (a *API) getLinkHandler(ctx *fasthttp.RequestCtx) {
 		return
 	}
 
-	json, _ := json.Marshal(link)
-
-	ctx.SetBody(json)
-	ctx.SetStatusCode(fasthttp.StatusOK)
+	ctx.Redirect(link.URL, fasthttp.StatusFound)
 }
 
 func (a *API) okHandler(ctx *fasthttp.RequestCtx) {

@@ -20,22 +20,6 @@ func TestPreSave(t *testing.T) {
 
 	if *link.Duration != 30*time.Second {
 		t.Fatal("failed to get correct count")
-	} else if time.Now().Sub(link.CreatedAt).Nanoseconds() <= 0 {
-		t.Fatal("CreatedAt incorrect")
-	}
-}
-
-func TestAfterGet(t *testing.T) {
-	link := Link{
-		URL:     "https://google.com",
-		Key:     "a",
-		Seconds: 30,
-	}
-
-	link.PreSave()
-	link.AfterGet()
-	if link.Seconds == 30 {
-		t.Fatal("failed to compute correct seconds remaining")
 	}
 }
 

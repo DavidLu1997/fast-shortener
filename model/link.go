@@ -4,11 +4,10 @@ import "github.com/davidlu1997/fast-shortener/config"
 import "time"
 
 type Link struct {
-	URL       string         `json:"url"`
-	Key       string         `json:"key"`
-	Duration  *time.Duration `json:"-"`
-	CreatedAt time.Time      `json:"-"`
-	Seconds   int64          `json:"seconds"`
+	URL      string         `json:"url"`
+	Key      string         `json:"key"`
+	Duration *time.Duration `json:"-"`
+	Seconds  int64          `json:"seconds"`
 }
 
 func (l *Link) PreSave() {
@@ -16,12 +15,6 @@ func (l *Link) PreSave() {
 		l.Duration = new(time.Duration)
 		*l.Duration = time.Duration(l.Seconds) * time.Second
 	}
-
-	l.CreatedAt = time.Now()
-}
-
-func (l *Link) AfterGet() {
-	l.Seconds = int64(time.Now().Sub(l.CreatedAt).Seconds())
 }
 
 func (l *Link) IsValid(config *config.Configuration) bool {
