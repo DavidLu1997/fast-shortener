@@ -1,0 +1,23 @@
+machine:
+  environment:
+    GOROOT: ""
+    GOPATH: "${HOME}/.go_workspace"
+    PATH: "${GOPATH}/bin:${PATH}"
+    USERNAME: "davidlu1997"
+    BUILD_PATH: "${GOPATH}/src/github.com/${USERNAME}/${CIRCLE_PROJECT_REPONAME}"
+
+checkout:
+  post:
+    - rm -rf ~/.go_workspace/src/github.com/${USERNAME}
+    - mkdir -p ~/.go_workspace/src/github.com/${USERNAME}
+    - cp -R ~/$CIRCLE_PROJECT_REPONAME $BUILD_PATH
+
+dependencies:
+  pre:
+    - cd $BUILD_PATH
+  override:
+    - echo "do nothing"
+
+test:
+  override:
+    - cd $BUILD_PATH && make test
