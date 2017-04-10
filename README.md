@@ -60,3 +60,8 @@ Clone the repo: `go get github.com/davidlu1997/fast-shortener`
 
 - Run server: `make run`
 - Check health: `curl http://localhost:8069/ok`
+
+### Lint
+
+- Lint actionable: `make lint`
+- Lint all: `make lint-all`
