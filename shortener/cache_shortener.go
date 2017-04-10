@@ -26,7 +26,6 @@ func InitCacheShortener(config *config.Configuration) *CacheShortener {
 func (c *CacheShortener) Get(key string) *model.Link {
 	if l, found := c.cache.Get(key); found {
 		link := l.(*model.Link)
-		link.AfterGet()
 		return link
 	}
 	return nil
