@@ -1,6 +1,9 @@
 test:
 	go test -cover $(shell go list ./... | grep -v /vendor/)
 
+benchmark:
+	go test -bench=. $(shell go list ./... | grep -v /vendor/)
+
 test-coverage:
 	./scripts/test
 

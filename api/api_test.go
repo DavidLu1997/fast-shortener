@@ -12,6 +12,7 @@ import (
 )
 
 const configPath = "../config/config.json"
+const numLinks = 10
 
 func testingAPI() *API {
 	config, err := config.GetConfig(configPath)
@@ -28,7 +29,7 @@ func TestPutLink(t *testing.T) {
 		t.Fatal("Failed to initialize testing API")
 	}
 
-	for i := 0; i < 100; i++ {
+	for i := 0; i < numLinks; i++ {
 		go func(a int) {
 			link := model.Link{
 				URL:     fmt.Sprintf("http://derp.com/put-%d", a),
@@ -115,8 +116,6 @@ func TestGetLink(t *testing.T) {
 	if api == nil {
 		t.Fatal("Failed to initialize testing API")
 	}
-
-	numLinks := 100
 
 	successCh := make(chan int)
 	for i := 0; i < numLinks; i++ {
