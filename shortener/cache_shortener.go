@@ -16,9 +16,6 @@ type CacheShortener struct {
 
 func InitCacheShortener(config *config.Configuration) *CacheShortener {
 	cache := cache.New(config.Cache.DefaultDuration, config.Cache.DefaultPurge)
-	if cache == nil {
-		return nil
-	}
 
 	return &CacheShortener{
 		cache:  cache,

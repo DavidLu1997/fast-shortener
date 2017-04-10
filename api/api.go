@@ -46,11 +46,7 @@ func (a *API) getLinkHandler(ctx *fasthttp.RequestCtx) {
 		return
 	}
 
-	json, err := json.Marshal(link)
-	if err != nil {
-		ctx.Error(err.Error(), fasthttp.StatusBadGateway)
-		return
-	}
+	json, _ := json.Marshal(link)
 
 	ctx.SetBody(json)
 	ctx.SetStatusCode(fasthttp.StatusOK)

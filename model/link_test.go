@@ -56,6 +56,10 @@ func TestIsValid(t *testing.T) {
 		t.Fatal("should be invalid, key too short")
 	}
 
+	if !link1.IsValid(nil) {
+		t.Fatal("should be valid with nil config")
+	}
+
 	link2 := Link{
 		URL:     "https://google.com",
 		Key:     "derp-herp",
@@ -98,5 +102,14 @@ func TestIsValid(t *testing.T) {
 
 	if link5.IsValid(config) {
 		t.Fatal("should be invalid, duration too long")
+	}
+
+	link6 := Link{
+		URL: "https://google.com",
+		Key: "derp-herp",
+	}
+
+	if link6.IsValid(config) {
+		t.Fatal("should be invalid, no duration")
 	}
 }

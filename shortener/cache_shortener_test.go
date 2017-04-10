@@ -32,13 +32,13 @@ func TestCacheShortenerNormal(t *testing.T) {
 	}
 
 	if l := cache.Get(link1.Key); l == nil {
-		t.Fatal("should have found link")
+		t.Fatal("Should have found link")
 	} else if l.URL != link1.URL || l.Key != link1.Key {
-		t.Fatal("not correct link")
+		t.Fatal("Link not correct")
 	}
 
 	if l := cache.Get("abc"); l != nil {
-		t.Fatal("should not have found random key")
+		t.Fatal("Should not have found random key")
 	}
 }
 
@@ -53,7 +53,7 @@ func TestCacheShortenerExpiration(t *testing.T) {
 
 	cache := InitCacheShortener(config)
 	if cache == nil {
-		t.Fatal("failed to init cache shortener")
+		t.Fatal("Failed to init cache shortener")
 	}
 
 	link1 := &model.Link{
@@ -70,7 +70,7 @@ func TestCacheShortenerExpiration(t *testing.T) {
 	time.Sleep(5 * time.Microsecond)
 
 	if l := cache.Get(link1.Key); l != nil {
-		t.Fatal("should not have found link")
+		t.Fatal("Should not have found expired link")
 	}
 }
 
@@ -84,7 +84,7 @@ func TestCacheShortenerMaxSize(t *testing.T) {
 
 	cache := InitCacheShortener(config)
 	if cache == nil {
-		t.Fatal("failed to init cache shortener")
+		t.Fatal("Failed to init cache shortener")
 	}
 
 	link1 := &model.Link{
@@ -104,6 +104,22 @@ func TestCacheShortenerMaxSize(t *testing.T) {
 	}
 
 	if err := cache.Put(link2); err == nil {
-		t.Fatal("should have errored")
+		t.Fatal("Should have errored exceeding max size")
+	}
+}
+
+func TestPutNilLink(t *testing.T) {
+	config, err := config.GetConfig(configPath)
+	if config == nil {
+		t.Fatal(err)
+	}
+
+	cache := InitCacheShortener(config)
+	if cache == nil {
+		t.Fatal("Failed to init cache shortener")
+	}
+
+	if err := cache.Put(nil); err == nil {
+		t.Fatal("Should have errored putting nil link")
 	}
 }
