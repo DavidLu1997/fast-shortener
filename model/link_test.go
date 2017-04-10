@@ -10,7 +10,7 @@ import (
 const configPath = "../config/config.json"
 
 func TestPreSave(t *testing.T) {
-	link := &Link{
+	link := Link{
 		URL:     "https://google.com",
 		Key:     "a",
 		Seconds: 30,
@@ -20,6 +20,22 @@ func TestPreSave(t *testing.T) {
 
 	if *link.Duration != 30*time.Second {
 		t.Fatal("failed to get correct count")
+	} else if time.Now().Sub(link.CreatedAt).Nanoseconds() <= 0 {
+		t.Fatal("CreatedAt incorrect")
+	}
+}
+
+func TestAfterGet(t *testing.T) {
+	link := Link{
+		URL:     "https://google.com",
+		Key:     "a",
+		Seconds: 30,
+	}
+
+	link.PreSave()
+	link.AfterGet()
+	if link.Seconds == 30 {
+		t.Fatal("failed to compute correct seconds remaining")
 	}
 }
 
@@ -29,7 +45,7 @@ func TestIsValid(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	link1 := &Link{
+	link1 := Link{
 		URL:     "https://google.com",
 		Key:     "a",
 		Seconds: 300,
@@ -40,7 +56,7 @@ func TestIsValid(t *testing.T) {
 		t.Fatal("should be invalid, key too short")
 	}
 
-	link2 := &Link{
+	link2 := Link{
 		URL:     "https://google.com",
 		Key:     "derp-herp",
 		Seconds: 1,
@@ -51,7 +67,7 @@ func TestIsValid(t *testing.T) {
 		t.Fatal("should be invalid, duration too short")
 	}
 
-	link3 := &Link{
+	link3 := Link{
 		URL:     "https://google.com",
 		Key:     "derp-herp",
 		Seconds: 300,
@@ -62,7 +78,7 @@ func TestIsValid(t *testing.T) {
 		t.Fatal("should be valid")
 	}
 
-	link4 := &Link{
+	link4 := Link{
 		URL:     "https://google.com",
 		Key:     "abcdefghijklmnopqrstuvwxyz",
 		Seconds: 300,
@@ -73,7 +89,7 @@ func TestIsValid(t *testing.T) {
 		t.Fatal("should be invalid, key too long")
 	}
 
-	link5 := &Link{
+	link5 := Link{
 		URL:     "https://google.com",
 		Key:     "derp-herp",
 		Seconds: 3000000,
