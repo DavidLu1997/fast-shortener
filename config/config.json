@@ -1,6 +1,6 @@
 {
     "server": {
-        "baseUrl": "localhost",
+        "baseURL": "localhost",
         "port": ":8069"
     },
     "links": {

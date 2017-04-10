@@ -8,12 +8,14 @@ import (
 	cache "github.com/patrickmn/go-cache"
 )
 
+// CacheShortener implements Shortener backed by go-cache
 type CacheShortener struct {
 	cache  *cache.Cache
 	config *config.Configuration
 	Shortener
 }
 
+// InitCacheShortener takes a configuration and returns a new CacheShortener
 func InitCacheShortener(config *config.Configuration) *CacheShortener {
 	cache := cache.New(config.Cache.DefaultDuration, config.Cache.DefaultPurge)
 
@@ -23,6 +25,7 @@ func InitCacheShortener(config *config.Configuration) *CacheShortener {
 	}
 }
 
+// Get gets a link from the cache given a key
 func (c *CacheShortener) Get(key string) *model.Link {
 	if l, found := c.cache.Get(key); found {
 		link := l.(*model.Link)
@@ -31,6 +34,7 @@ func (c *CacheShortener) Get(key string) *model.Link {
 	return nil
 }
 
+// Put puts a link in the cache
 func (c *CacheShortener) Put(link *model.Link) error {
 	if link == nil {
 		return fmt.Errorf("null link")

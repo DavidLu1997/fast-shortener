@@ -11,11 +11,13 @@ import (
 	"github.com/valyala/fasthttp"
 )
 
+// API is the primary interface for fast-shortener
 type API struct {
 	shortener shortener.Shortener
 	config    *config.Configuration
 }
 
+// InitAPI creates an API from a given configuration
 func InitAPI(config *config.Configuration) *API {
 	return &API{
 		shortener: shortener.InitCacheShortener(config),
@@ -53,6 +55,7 @@ func (a *API) okHandler(ctx *fasthttp.RequestCtx) {
 	ctx.SetStatusCode(fasthttp.StatusOK)
 }
 
+// RequestHandler serves all requests to the API
 func (a *API) RequestHandler(ctx *fasthttp.RequestCtx) {
 	switch string(ctx.Path()) {
 	case "/put":
