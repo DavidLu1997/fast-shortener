@@ -4,7 +4,7 @@
         "port": ":8069"
     },
     "links": {
-        "minLength": 5,
+        "minLength": 3,
         "maxLength": 20,
         "minDuration": 30,
         "maxDuration": 1800
