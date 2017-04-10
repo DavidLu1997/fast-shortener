@@ -35,13 +35,20 @@ To be redirected to https://google.com after PUT-ing the above, make a request t
 
 See [config.json](https://github.com/DavidLu1997/fast-shortener/blob/master/config/config.json)
 
-## Documentations
+## Documentation
 
 Godocs TBA
 
 ## Benchmarks
 
-- TBA, currently 300 rps PUT, 1000 rps GET on a 15" MBP
+Ran locally on a mid-2015 15" MBP
+
+```
+BenchmarkPutLink-8   	  500000	      2912 ns/op
+BenchmarkGetLink-8   	 2000000	       848 ns/op
+BenchmarkCacheShortenerPut-8   	 2000000	       727 ns/op
+BenchmarkCacheShortenerGet-8   	10000000	       230 ns/op
+```
 
 ## Development
 
