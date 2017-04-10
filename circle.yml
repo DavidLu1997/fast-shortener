@@ -20,4 +20,7 @@ dependencies:
 
 test:
   override:
-    - cd $BUILD_PATH && make test
+    - cd $BUILD_PATH && make test-coverage
+  post:
+    - bash <(curl -s https://codecov.io/bash) -t 20a49438-958d-46d8-8e47-01c0ee899268 -f $BUILD_PATH/coverage.txt
+    - rm -rf $BUILD_PATH/coverage.txt
