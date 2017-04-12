@@ -14,7 +14,7 @@ run:
 	go run main.go
 
 lint:
-	golint $(go list ./... | grep -v /vendor/) | grep -v -E 'exported|comment'
+	golint $(shell go list ./... | grep -v /vendor/) | grep -v -E 'exported|comment'
 
 lint-all:
-	golint $(go list ./... | grep -v /vendor/)
+	golint $(shell go list ./... | grep -v /vendor/)
